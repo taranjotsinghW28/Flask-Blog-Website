@@ -1,7 +1,9 @@
 import logging
+import os # NEW: Added os import
 from logging.config import fileConfig
 
 from flask import current_app
+from sqlalchemy import create_engine # NEW: Added create_engine import
 
 from alembic import context
 
@@ -51,12 +53,28 @@ def get_metadata():
     return target_db.metadata
 
 
+# =======================================================
+# FIX: Move process_revision_directives definition outside
+# =======================================================
+
+# This callback is used to prevent an auto-migration from being generated
+# when there are no changes to the schema.
+def process_revision_directives(context, revision, directives):
+    if getattr(config.cmd_opts, 'autogenerate', False):
+        script = directives[0]
+        if script.upgrade_ops.is_empty():
+            directives[:] = []
+            logger.info('No changes in schema detected.')
+
+# =======================================================
+
+
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
+    here as well. By skipping the Engine creation
     we don't even need a DBAPI to be available.
 
     Calls to context.execute() here emit the given string to the
@@ -79,22 +97,21 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-
-    # this callback is used to prevent an auto-migration from being generated
-    # when there are no changes to the schema
-    # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
-    def process_revision_directives(context, revision, directives):
-        if getattr(config.cmd_opts, 'autogenerate', False):
-            script = directives[0]
-            if script.upgrade_ops.is_empty():
-                directives[:] = []
-                logger.info('No changes in schema detected.')
-
     conf_args = current_app.extensions['migrate'].configure_args
+
+    # FIX: Ensure process_revision_directives is set in conf_args here
     if conf_args.get("process_revision_directives") is None:
         conf_args["process_revision_directives"] = process_revision_directives
 
-    connectable = get_engine()
+    # >>>>>>>>>>>>>> FIX: Use Render's DATABASE_URL environment variable <<<<<<<<<<<<<<<
+    if os.environ.get("DATABASE_URL"):
+        # Use the environment variable directly (needed for Render deployment)
+        connectable = create_engine(os.environ.get("DATABASE_URL"))
+    else:
+        # Fallback to the standard Flask/Alembic method for local development
+        connectable = get_engine()
+    # >>>>>>>>>>>>>> END FIX <<<<<<<<<<<<<<<
+
 
     with connectable.connect() as connection:
         context.configure(
