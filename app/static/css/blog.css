@@ -1,0 +1,1210 @@
+/* Base Styles and Colors (Updated) */
+:root {
+    /* Main color palette */
+    --color-primary: #3C79A5; /* Medium Blue */
+    --color-secondary: #E98074; /* Soft Coral/Red accent */
+    
+    /* Backgrounds - soft, slightly dark light theme */
+    --color-background-body: #F5F7FA; /* Very light, slightly cool gray (Main Page Background) */
+    --color-background-main: #FFFFFF; /* Pure white for content blocks (The main body of a blog post, login form, etc.) */
+    
+    /* NEW: Slightly Darker Backgrounds for Header/Footer */
+    --color-background-header: #E0E4E8; /* A definite light gray, slightly darker than the body */
+    --color-background-footer: #D3D7DB; /* Even darker than header for a clear distinction */
+
+    /* Text & Borders */
+    --color-text-dark: #333333; /* Dark gray for main text */
+    --color-text-light: #555555; /* Medium gray for secondary text/links */
+    --color-border: #BBBBBB; /* Slightly darker border for contrast against new backgrounds */
+    --color-flash-success: #4CAF50;
+    --color-flash-error: #F44336;
+    
+    /* NEW: Sky Blue for Brand Logo */
+    --color-brand-logo: #00A3E0; /* A brighter, more distinct sky blue */
+
+    /* Font stack */
+    --font-stack: 'Inter', sans-serif;
+}
+
+/* Global Reset and Typography (Unchanged) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-stack);
+    background-color: var(--color-background-body);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-secondary);
+}
+
+/* Header and Navigation Styles (Updated) */
+header {
+    /* Uses the new slightly darker background */
+    background-color: var(--color-background-header); 
+    border-bottom: 1px solid var(--color-border);
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Slightly stronger shadow for the darker header */
+}
+
+.head {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head > div { /* Targetting 'JustType' text */
+    font-size: 1.9rem; /* Made slightly bigger */
+    font-weight: 800; /* Keeping it bold */
+    /* Uses the new sky blue color */
+    color: var(--color-brand-logo); 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow to make it pop */
+}
+
+nav a {
+    margin-left: 20px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    color: var(--color-primary);
+    background-color: rgba(60, 121, 165, 0.15); /* Slightly less transparent hover */
+}
+
+nav a.active {
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+}
+
+/* Distinct Style for the "Share Your Thought" Link (Unchanged) */
+nav a[href*="add_blog"] {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin-left: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+nav a[href*="add_blog"]:hover {
+    background-color: #5AA0D2;
+    transform: translateY(-1px);
+}
+
+/* Authentication Messages (Login/Signup Pages) (Unchanged) */
+.auth-message {
+    color: var(--color-text-light);
+    margin-right: 10px;
+}
+
+.auth-link {
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    color: #C0584D;
+}
+
+/* Main Content Area (Unchanged) */
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    min-height: calc(100vh - 180px); /* Keeps footer down */
+}
+
+.page-content-wrapper {
+    background-color: var(--color-background-main);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-border);
+}
+
+/* Flash Messages (Unchanged) */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.flash-messages li {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+}
+
+.flash-messages li.success {
+    background-color: var(--color-flash-success);
+}
+
+.flash-messages li.error,
+.flash-messages li.danger {
+    background-color: var(--color-flash-error);
+}
+
+/* Footer Styles (Updated) */
+.foot {
+    /* Uses the new, slightly darker background */
+    background-color: var(--color-background-footer); 
+    color: var(--color-text-dark); /* Changed to dark text for contrast on darker background */
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9rem;
+}
+
+.foot p {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: var(--color-text-light); /* Kept link color soft */
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+}
+
+/* Responsive adjustments (Unchanged) */
+@media (max-width: 768px) {
+    .head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .head > div {
+        margin-bottom: 15px;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        margin-left: 0;
+        margin-right: 15px;
+        margin-bottom: 10px;
+    }
+    
+    nav a[href*="add_blog"] {
+        margin-left: 0;
+    }
+}
+/* Center the form and give it a structure */
+.login-container {
+    /* Use flexbox on the container to center the content vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center;
+    
+    /* Make the container take up most of the screen height */
+    /* Adjust height as needed, ensuring it fits well within the main element */
+    min-height: 80vh; 
+    padding: 20px;
+}
+
+/* Style for the 'JustType' Heading */
+.login-container h1 {
+    /* Overriding the inline style to use our variables if possible */
+    color: var(--color-primary, #3C79A5) !important; 
+    margin-bottom: 30px !important;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+
+/* Style for the Form Box (using the class 'sigin') - DARKER LIGHT THEME APPLIED */
+.sigin {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    
+    background-color: #D4D9E0; /* UPDATED: Slightly Lighter Gray-Blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slight shadow increase */
+    border: 1px solid #AAB1B8; /* Darker muted border */
+    transition: transform 0.3s ease; /* Animation prep */
+}
+.sigin:hover {
+    transform: scale(1.01); /* Subtle "lift" effect */
+}
+
+/* Labels and Input Fields */
+.sigin label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--color-text-dark); /* Dark text for readability on light background */
+}
+
+.sigin input[type="email"],
+.sigin input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-border, #BBBBBB);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--color-text-dark, #333333);
+    background-color: white; 
+    transition: border-color 0.3s ease;
+}
+
+.sigin input:focus {
+    border-color: var(--color-primary, #3C79A5);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(60, 121, 165, 0.2);
+}
+
+/* Sign In Button */
+.sigin button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary, #3C79A5); /* Primary Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sigin button[type="submit"]:hover {
+    background-color: #5AA0D2; /* Lighter blue on hover */
+}
+
+/* Switch Message (Don't have an account?) */
+.auth-switch {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: var(--color-text-dark); /* Dark text for readability on light background */
+}
+
+.auth-switch a {
+    font-weight: 600;
+    color: var(--color-secondary, #E98074); /* Use secondary accent for the link */
+}
+
+.auth-switch a:hover {
+    color: #C0584D;
+}
+
+/* ------------------------------------ */
+/* --- Signup Form Styles (.signup-page-container, .signup-form) - DARKER LIGHT THEME APPLIED --- */
+/* ------------------------------------ */
+
+/* Center the form and give it a structure (Similar to login, but with new class) */
+.signup-page-container {
+    /* Use flexbox on the container to center the content vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: center;
+    
+    /* Make the container take up most of the screen height */
+    min-height: 80vh; 
+    padding: 20px;
+}
+
+/* Style for the Form Box (using the new class 'signup-form') */
+.signup-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    
+    background-color: #D4D9E0; /* UPDATED: Slightly Lighter Gray-Blue */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Slight shadow increase */
+    border: 1px solid #AAB1B8; /* Darker muted border */
+    transition: transform 0.3s ease; /* Animation prep */
+}
+.signup-form:hover {
+    transform: scale(1.01); /* Subtle "lift" effect */
+}
+
+/* Labels and Input Fields (Further reduced spacing) */
+.signup-form label {
+    display: block;
+    margin-bottom: 0px; 
+    margin-top: 0px; 
+    font-weight: 600;
+    color: var(--color-text-dark); /* Dark text for readability on light background */
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0px; 
+    border: 1px solid var(--color-border, #BBBBBB);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--color-text-dark, #333333);
+    background-color: white; 
+    transition: border-color 0.3s ease;
+}
+
+.signup-form input:focus {
+    border-color: var(--color-primary, #3C79A5);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(60, 121, 165, 0.2);
+}
+
+/* Sign Up Button */
+.signup-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary, #3C79A5); /* Primary Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.signup-form button[type="submit"]:hover {
+    background-color: #5AA0D2; /* Lighter blue on hover */
+}
+
+
+/* Responsive adjustment for the form */
+@media (max-width: 500px) {
+    .signup-form {
+        padding: 30px 20px;
+    }
+}
+
+
+/* ------------------------------------ */
+/* --- Blog Feed Styles (.content, .post-meta, .content2) --- */
+/* ------------------------------------ */
+
+/* Styles for each individual blog post card */
+.content {
+    background-color: #F2F2F2; /* Changed from #FCFCF9 to a slightly darker light gray */
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border, #DDDDDD);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect to make the card feel interactive */
+.content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Post Title */
+.content h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-dark, #333333);
+    margin-top: 10px;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+/* Post Content */
+.content p {
+    color: var(--color-text-dark, #333333);
+    margin-bottom: 20px;
+}
+
+/* Post Meta Information (User and Date) */
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-border, #DDDDDD);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.post-meta h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-light, #555555);
+}
+
+/* Styling the Action Links (Edit/Delete) as Buttons */
+.action-link {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-right: 10px;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Edit Link Style */
+.edit-link {
+    background-color: var(--color-primary, #3C79A5);
+    color: white;
+}
+
+.edit-link:hover {
+    background-color: #5AA0D2;
+    color: white;
+}
+
+/* Delete Link Style */
+.delete-link {
+    background-color: var(--color-secondary, #E98074);
+    color: white;
+}
+
+.delete-link:hover {
+    background-color: #C0584D;
+    color: white;
+}
+
+/* No Posts Message */
+.no-posts-message {
+    text-align: center;
+    padding: 50px 20px;
+    border: 2px dashed var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text-light);
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+/* "Add a new blog post" Call to Action at the bottom */
+.content2 {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.content2 p a {
+    /* Style the link to look like a main button */
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--color-primary, #3C79A5);
+    color: white;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.content2 p a:hover {
+    background-color: #5AA0D2;
+    transform: translateY(-1px);
+    color: white;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .content {
+        padding: 20px;
+    }
+
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .post-meta h4 {
+        margin-bottom: 5px;
+    }
+    
+    .action-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+/* ------------------------------------ */
+/* --- ADD/EDIT BLOG FORM STYLES (Deep Green/Gold) --- */
+/* ------------------------------------ */
+
+/* Center the form content - ADDED ANIMATION */
+.add {
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    
+    /* New theme background: Soft, warm off-white */
+    background-color: #F8F4E3; 
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 2px solid #A2A980;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* ADDED TRANSITION */
+}
+.add:hover {
+    transform: scale(1.005); /* Subtle scale up */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+/* Heading Style */
+.add h2 { /* Added .add for better specificity */
+    text-align: center;
+    color: #384A3B; /* Deep, writing-friendly green */
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #E5C384;
+    padding-bottom: 10px;
+}
+
+/* Labels */
+.add label {
+    display: block;
+    margin-top: 25px; /* INCREASED SPACE ABOVE LABEL */
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #384A3B;
+    font-size: 1.05rem;
+}
+
+/* Input Fields (Text and Title) */
+.add input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 35px; /* INCREASED SPACE BELOW INPUT (Title/Email) */
+    border: 1px solid #A2A980;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+/* Textarea (For Content) - HEIGHT INCREASED AND SELECTOR FIXED */
+.add textarea,
+.add input[type="textarea"] { /* <-- ADDED SELECTOR FOR IMMEDIATE FIX */
+    width: 100%;
+    height: 350px; /* INCREASED HEIGHT */
+    padding: 15px;
+    margin-bottom: 30px; /* INCREASED SPACE BELOW TEXTAREA (before button) */
+    border: 1px solid #A2A980;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333333;
+    background-color: #FFFFFF;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.add input:focus,
+.add textarea:focus {
+    border-color: #E5C384;
+    outline: none;
+    box-shadow: 0 0 5px rgba(229, 195, 132, 0.7);
+}
+
+/* Submit Button */
+.add button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #384A3B;
+    color: #F8F4E3;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add button[type="submit"]:hover {
+    background-color: #536B58;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ------------------------------------ */
+/* --- PROFILE POSTS (YOUR POSTS) THEME: Classic Navy & Crisp White (UPDATED) --- */
+/* ------------------------------------ */
+
+/* Heading Style for Your Posts Page (Overriding inline style) */
+.page-content-wrapper h2 {
+    color: #2D3E50 !important; /* Deep Navy Blue */
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 40px !important;
+    text-align: center;
+}
+
+/* Card Style (yours-post overrides .content background) */
+.yours-post {
+    background-color: #EFF3F8; /* UPDATED: Very pale, cool blue-gray for distinct background */
+    border: 1px solid #D5DCE4; /* Muted Blue-Gray border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.yours-post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+}
+
+/* Post Meta (Date and "Posted by You") */
+.yours-post .post-meta h4 {
+    color: #6C7A89; /* Muted Blue-Gray for metadata */
+    font-weight: 400;
+}
+
+/* Title */
+.yours-post h3 {
+    color: #2D3E50; /* Deep Navy Blue for title */
+    font-weight: 700;
+}
+
+/* Edit/Delete Links (Specific styling for this view) - CLASSIC OUTLINE BUTTONS */
+.yours-post .action-link {
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-left: 15px;
+    transition: background-color 0.2s ease, transform 0.1s ease, color 0.2s ease;
+    display: inline-block; 
+    
+    /* Classic Outline Base Style */
+    background-color: transparent;
+    border: 1px solid #2D3E50; /* Deep Navy Border */
+    color: #2D3E50; /* Deep Navy Text */
+}
+
+/* Edit Link Style (Uses base outline style) */
+.yours-post .edit-link:hover {
+    background-color: #2D3E50; /* Fill with Navy on hover */
+    color: white; /* White text on hover */
+    transform: translateY(-1px);
+}
+
+/* Delete Link Style (Uses base outline style, but red accent on hover) */
+.yours-post .delete-link {
+    /* Inherits border and text color from action-link (Navy) */
+    background-color: transparent;
+}
+
+.yours-post .delete-link:hover {
+    background-color: #D9534F; /* Red fill on hover (for danger) */
+    color: white;
+    border-color: #D9534F; /* Red border on hover */
+    transform: translateY(-1px);
+}
+
+//* ------------------------------- */
+/* Comment Section - Dark Theme */
+/* ------------------------------- */
+
+/* Main comment section */
+.comments-section {
+    background-color: #1e1e1e; /* Dark background */
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-height: 300px; /* Scrollable height */
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    color: #ffffff; /* Default text color */
+}
+
+/* Individual comment item */
+.comment-item {
+    background-color: #2a2a2a; /* Slightly lighter than section */
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border-bottom: 1px dotted #444; /* Subtle separator */
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+/* Last comment - remove bottom border */
+.comment-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+/* Comment author */
+.comment-author,
+.comment-item strong {
+    color: #00bcd4; /* Blue accent for author */
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+/* Comment content text */
+.comment-text {
+    color: #ffffff; /* White content text */
+}
+
+/* Comment date/time */
+.comment-date {
+    font-size: 0.8rem;
+    color: #bbbbbb; /* Dimmed white for dates */
+    float: right;
+}
+
+/* Reply section inside a comment */
+.reply-section {
+    margin-top: 8px;
+    margin-left: 20px;
+    display: none; /* Initially hidden */
+}
+
+/* Replies inside reply section */
+.reply-section .reply {
+    background-color: #333333;
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+/* No replies text */
+.no-replies {
+    font-size: 0.85rem;
+    color: #aaaaaa;
+    font-style: italic;
+}
+
+/* Reply form inside comment */
+.comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Reply input field */
+.comment-form input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #ffffff; /* White for typing */
+    color: #000000; /* Black text */
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form input[type="text"]:focus {
+    border-color: #00bcd4;
+}
+
+/* Reply submit button */
+.comment-form button[type="submit"] {
+    background-color: #00bcd4;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.comment-form button[type="submit"]:hover {
+    background-color: #0097a7;
+    transform: translateY(-1px);
+}
+
+/* Toggle comments button */
+.toggle-comments-btn {
+    background: none;
+    border: none;
+    color: #00bcd4;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 0;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.toggle-comments-btn:hover {
+    color: #0097a7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .comments-section {
+        padding: 10px;
+        max-height: 250px;
+    }
+
+    .comment-item {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .reply-section {
+        margin-left: 15px;
+    }
+
+    .comment-form input[type="text"] {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+
+    .comment-form button[type="submit"] {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .toggle-comments-btn {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* messages.css - Chat List Styling (Dark/light theme compatible) */
+
+/* Main container for chat list */
+.chat-list {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Individual chat item */
+.chat-item {
+    background-color: var(--color-background-main); /* Matches your page-content-wrapper */
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--color-text-dark);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat user name */
+.chat-user-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+/* Last message snippet */
+.chat-last-message {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Last message timestamp */
+.chat-last-date {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    text-align: right;
+}
+
+/* Empty state */
+p {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-top: 50px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chat-list {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .chat-item {
+        padding: 12px 15px;
+    }
+
+    .chat-user-name {
+        font-size: 1.1rem;
+    }
+
+    .chat-last-message {
+        font-size: 0.9rem;
+    }
+
+    .chat-last-date {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .chat-item {
+        padding: 10px 12px;
+    }
+
+    .chat-user-name {
+        font-size: 1rem;
+    }
+
+    .chat-last-message {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* particular_messages.css - Chat between two users */
+
+/* particular_messages.css - Chat between two users */
+
+/* Set up some custom properties for easy color management */
+:root {
+    --color-primary: #4A90E2; /* A nice, friendly blue */
+    --color-border: #CCCCCC;
+    --color-text-dark: #333;
+    --color-text-light: #777;
+    --color-received-bg: #EAEAEA; /* A light grey for received messages */
+    --color-chat-bg: #F9F9F9; /* Very light grey/off-white for container background */
+}
+
+/* Main container for chat window */
+.chat-container {
+    max-width: 800px;
+    margin: 20px auto 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--color-chat-bg); /* Use the new light background color */
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Chat header (other user info) */
+.chat-header {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+/* Message list container */
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px; /* For scroll spacing */
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column; /* Stack messages vertically */
+    gap: 10px;
+}
+
+/* Individual message bubbles */
+.message {
+    max-width: 70%;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    display: block;  /* ensures each message takes its own line */
+    clear: both;     /* prevents overlap of sent/received messages */
+    position: relative;
+}
+
+/* Sent messages (right side) */
+.message.sent {
+    background-color: var(--color-primary);
+    color: white;
+    border-bottom-right-radius: 0;
+    margin-left: auto; /* pushes bubble to right */
+}
+
+/* Received messages (left side) */
+.message.received {
+    background-color: var(--color-received-bg); /* Use new light grey */
+    color: var(--color-text-dark);
+    border-bottom-left-radius: 0;
+    margin-right: auto; /* pushes bubble to left */
+}
+
+/* Timestamp inside the bubble */
+.message-date {
+    font-size: 0.7rem;
+    color: rgba(0,0,0,0.5);
+    margin-top: 4px;
+    text-align: right;
+}
+
+/* Message input container - FIX: Added align-items: center */
+.message-input-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    /* This makes sure the input and button line up perfectly in the middle */
+    align-items: center; 
+}
+
+/* Message input field - **REDUCED SIZE TO 50PX** */
+.message-input-container input[type="text"] {
+    flex: 1;
+    height: 50px;          /* Adjusted height from 60px to 50px */
+    font-size: 1.1rem;     /* Adjusted text size to 1.1rem */
+    border-radius: 25px;   /* Adjusted rounded edges */
+    border: 1px solid var(--color-border);
+    padding: 0 20px;       /* Adjusted horizontal padding */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.message-input-container input[type="text"]:focus {
+    border-color: var(--color-primary);
+}
+
+/* Send button - **REDUCED SIZE TO 50PX** */
+.message-input-container button[type="submit"] {
+    height: 50px;          /* Same height as input (50px) */
+    width: 120px;          /* Adjusted width to 120px */
+    font-size: 1.1rem;     /* Adjusted text size to 1.1rem */
+    border-radius: 25px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.message-input-container button[type="submit"]:hover {
+    background-color: #5AA0D2;
+    transform: translateY(-1px);
+}
+
+/* Empty state */
+.no-messages {
+    text-align: center;
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-top: 50px;
+}
+
+/* Scrollbar styling for messages */
+.messages-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 4px;
+}
+
+/* Responsive adjustments - **UPDATED FOR MOBILE SIZE** */
+@media (max-width: 768px) {
+    .chat-container {
+        padding: 15px;
+    }
+
+    .message {
+        max-width: 80%;
+    }
+
+    .chat-header {
+        font-size: 1.1rem;
+    }
+
+    /* Keep the smaller size consistent for tablets/smaller screens */
+    .message-input-container input[type="text"] {
+        height: 45px; /* Slightly smaller for this size */
+        padding: 0 20px;
+        font-size: 1rem;
+    }
+
+    .message-input-container button[type="submit"] {
+        height: 45px;
+        width: 100px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    /* Keep the smallest size consistent for phones */
+    .message-input-container input[type="text"] {
+        height: 40px; /* Made even smaller for small phones */
+        padding: 0 15px;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+
+    .message-input-container button[type="submit"] {
+        height: 40px;
+        width: 80px;
+        font-size: 0.9rem;
+        border-radius: 20px;
+    }
+
+    .message {
+        font-size: 0.9rem;
+    }
+}

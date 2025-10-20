@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-container">
+    <div class="chat-header">
+        💬 Chat with {{ other_user.username }}
+    </div>
+
+    <div class="chat-messages">
+        {% for message in messages %}
+            {% if message.sender_id == session.user_id %}
+                <div class="message sent">
+                    {{ message.content }}
+                    <div class="message-date">{{ message.date_sent.strftime('%d %b %Y %H:%M') }}</div>
+                </div>
+            {% else %}
+                <div class="message received">
+                    {{ message.content }}
+                    <div class="message-date">{{ message.date_sent.strftime('%d %b %Y %H:%M') }}</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="{{ url_for('post.chat_with_user', other_user_id=other_user.id) }}" class="chat-input">
+        
+        <div class="message-input-container"> 
+            <input type="text" name="message_content" required placeholder="Type a message...">
+            <button type="submit">Send</button>
+        </div>
+        
+    </form>
+
+</div>
+
+<script>
+    // Scroll to the bottom on page load
+    const chatMessages = document.querySelector('.chat-messages');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+</script>
+
+{% endblock %}

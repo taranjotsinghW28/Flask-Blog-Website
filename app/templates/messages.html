@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align: center; margin-bottom: 30px; color: #333;">Your Chats</h2>
+
+{% if chats %}
+    <div class="chat-list">
+        {% for chat in chats %}
+            <a href="{{ url_for('post.chat_with_user', other_user_id=chat.other_user.id) }}" class="chat-item">
+                <div class="chat-user-name">{{ chat.other_user.username }}</div>
+                {% if chat.last_message %}
+                    <div class="chat-last-message">
+                        {{ chat.last_message.content[:50] }}{% if chat.last_message.content|length > 50 %}...{% endif %}
+                    </div>
+                    <div class="chat-last-date">{{ chat.last_message.date_sent.strftime('%d %b %Y %H:%M') }}</div>
+                {% else %}
+                    <div class="chat-last-message">No messages yet</div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p style="text-align: center;">You have no chats yet.</p>
+{% endif %}
+
+{% endblock %}

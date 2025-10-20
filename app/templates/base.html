@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Links to your main stylesheet (located in the static folder) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+     <script src="{{ url_for('static', filename='js/blog.js') }}"></script>
+
+    {% block title %}
+    <title>JustType - Share Your Thoughts</title>
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <div class="head">
+            <div>JustType</div>
+            <nav>
+                {% if current_page in ['feed', 'profile', 'edit', 'addblog', 'messages'] %}
+                    
+                    <a href="{{ url_for('post.view_blog') }}" 
+                       {% if current_page == 'feed' %}class="active"{% endif %}>Feed (Home)</a>
+                    
+                    <!-- Assuming a 'messages_page' function exists in the 'post' blueprint -->
+                   <a href="{{ url_for('post.chat_list') }}" 
+   {% if current_page == 'messages' %}class="active"{% endif %}>Messages</a>
+
+                    
+                    <a href="{{ url_for('post.view_yourblog') }}" 
+                       {% if current_page == 'profile' %}class="active"{% endif %}>Your Profile</a>
+
+                    <!-- Distinct button for creating a new post -->
+                    <a href="{{ url_for('post.add_blog') }}">Share Your Thought</a>
+                    
+                    <!-- Logout Link -->
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+
+                {% elif current_page == 'login' %}
+                    <span class="auth-message">Need an account?</span>
+                    <a href="{{ url_for('auth.signup') }}" class="auth-link">Sign Up</a>
+
+                {% elif current_page == 'signup' %}
+                    <span class="auth-message">Already registered?</span>
+                    <a href="{{ url_for('auth.login') }}" class="auth-link">Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for category, msg in messages %}
+                <li class="{{ category }}">{{ msg }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <section class="page-content-wrapper">
+            {% block content %}
+            {% endblock %}
+        </section>
+    </main>
+
+    <footer class="foot">
+        <p>Thanks for using JustType &copy;</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

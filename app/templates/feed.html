@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align: center; margin-bottom: 30px; color: #333;">All Blog Posts</h2>
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="content">
+
+        <div class="post-meta">
+            <h4>Posted by {{ post.author.username }}</h4>
+            <h4>On: {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</h4>
+        </div>
+
+        <h3>{{ post.title }}</h3>
+
+        <p>{{ post.content }}</p>
+
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+            
+            {% set has_liked = post.likes|selectattr('user_id', 'equalto', session.user_id)|list %}
+            
+            <form class="like-form" data-post-id="{{ post.id }}">
+                
+                <button type="submit" class="like-btn" id="like-btn-{{ post.id }}" 
+                        style="background-color: transparent; border: 1px solid #ccc; padding: 5px 10px; cursor: pointer; border-radius: 5px;">
+                    {% if has_liked %}
+                        ❤️ Liked (<span id="like-count-{{ post.id }}">{{ post.likes|length }}</span>)
+                    {% else %}
+                        🤍 Like (<span id="like-count-{{ post.id }}">{{ post.likes|length }}</span>)
+                    {% endif %}
+                </button>
+            </form>
+
+            {% if post.author.id != session.user_id %}
+            <a href="{{ url_for('post.chat_with_user', other_user_id=post.author.id) }}" class="chat-btn">
+                💬 Chat
+            </a>
+            {% endif %}
+        </div>
+
+        <button class="toggle-comments-btn" onclick="toggleComments('{{ post.id }}')">
+            💬 View Comments ({{ post.comments|selectattr('parent_id','equalto',None)|list|length }})
+        </button>
+
+        <div id="comments-{{ post.id }}" class="comments-section" style="display: none;">
+            {% set top_comments = post.comments|selectattr('parent_id','equalto',None)|list %}
+            {% if top_comments %}
+                {% for comment in top_comments %}
+                    <div class="comment-item">
+                        <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+                        <div class="comment-date">{{ comment.date_posted.strftime('%d %b %Y %H:%M') }}</div>
+
+                        <button class="reply-btn" data-comment-id="{{ comment.id }}">
+                            Replies ({{ comment.replies|length }})
+                        </button>
+
+                        <div class="reply-section" data-parent-id="{{ comment.id }}" style="display: none; margin-left: 20px; margin-top: 5px;">
+                            
+                            {% if comment.replies %}
+                                {% for reply in comment.replies %}
+                                    <div class="reply">
+                                        <strong>{{ reply.author.username }}</strong>: {{ reply.content }}
+                                        <div class="comment-date">{{ reply.date_posted.strftime('%d %b %Y %H:%M') }}</div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no-replies">No replies yet.</p>
+                            {% endif %}
+
+                            <form class="reply-form" method="POST" action="{{ url_for('post.add_comment', post_id=post.id) }}">
+                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                <input type="text" name="comment_content" placeholder="Write a reply..." required>
+                                <button type="submit">Post Reply</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-comments">No comments yet. Be the first!</p>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('post.add_comment', post_id=post.id) }}" class="comment-form">
+                <input type="text" name="comment_content" placeholder="Add a comment..." required>
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
+
+        {% if post.user_id == session.user_id %}
+            <a href="{{ url_for('post.delete_blog', task_id=post.id) }}" class="action-link delete-link">Delete</a>
+            <a href="{{ url_for('post.edit_blog', task_id=post.id) }}" class="action-link edit-link">Edit</a>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No blog posted yet.</p>
+{% endif %}
+
+<div class="content2">
+    <p><a href="{{ url_for('post.add_blog') }}">Add a new blog post</a></p>
+</div>
+
+<script>
+// New function to instantly update like count and button style
+document.querySelectorAll('.like-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop the page from reloading on submit
+
+        const postId = this.dataset.postId;
+        const likeCountElement = document.getElementById(`like-count-${postId}`);
+        const likeButton = document.getElementById(`like-btn-${postId}`);
+        
+        // This is the URL from your Flask route
+        const url = `/like/${postId}`; 
+
+        // 1. Send POST request to Flask via AJAX
+        fetch(url, {
+            method: 'POST',
+            // No body needed for a simple like toggle
+        })
+        .then(response => {
+            if (response.status === 401) {
+                // If Flask returns 401, tell the user to log in
+                alert("Please log in to like posts.");
+                return;
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.success) {
+                // 2. Update the count number
+                likeCountElement.textContent = data.likes; 
+
+                // 3. Update the button emoji and text instantly
+                if (data.liked) {
+                    // Update the entire button content to show 'Liked' and the new count
+                    likeButton.innerHTML = `❤️ Liked (<span id="like-count-${postId}">${data.likes}</span>)`;
+                } else {
+                    // Update the entire button content to show 'Like' and the new count
+                    likeButton.innerHTML = `🤍 Like (<span id="like-count-${postId}">${data.likes}</span>)`;
+                }
+            } else if (data && data.error) {
+                console.error("Error from Flask:", data.error);
+            }
+        })
+        .catch(error => console.error('Error liking post:', error));
+    });
+});
+
+
+// Toggle comment section (existing code)
+function toggleComments(postId) {
+    const section = document.getElementById(`comments-${postId}`);
+    section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+}
+
+// Toggle reply sections (existing code)
+document.querySelectorAll(".reply-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        const parentId = button.dataset.commentId;
+        const replySection = document.querySelector(`.reply-section[data-parent-id="${parentId}"]`);
+        replySection.style.display = (replySection.style.display === "none" || replySection.style.display === "") ? "block" : "none";
+    });
+});
+</script>
+
+{% endblock %}

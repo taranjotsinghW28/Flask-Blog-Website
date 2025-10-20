@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align: center; margin-bottom: 30px; color: #333333;">Your Posts</h2>
+
+{% if tasks %} 
+    {% for task in tasks %} 
+    <div class="content yours-post">
+        
+        <div class="post-meta">
+            <h4>Posted by You</h4>
+            <h4>ON: {{ task.date_posted.strftime('%Y-%m-%d %H:%M') }}</h4>
+        </div>
+        
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.content }}</p>
+        
+        <a href="{{ url_for('post.delete_blog', task_id=task.id) }}" class="action-link delete-link">Delete this</a>
+        <a href="{{ url_for('post.edit_blog', task_id=task.id) }}" class="action-link edit-link">Edit this</a>
+        
+        <!-- Toggle Comments -->
+        <button class="toggle-comments-btn" onclick="toggleComments('{{ task.id }}')">
+            💬 View Comments ({{ task.comments|length }})
+        </button>
+
+        <!-- Hidden Comment Section -->
+        <div id="comments-{{ task.id }}" class="comments-section" style="display: none;">
+            <div class="comments-list">
+                {% for comment in task.comments if comment.parent_id is none %}
+                    <div class="comment-item">
+                        <strong>{{ comment.author.username }}</strong>: {{ comment.content }}
+                        <div class="comment-date">{{ comment.date_posted.strftime('%d %b %Y %H:%M') }}</div>
+
+                        <!-- Reply button -->
+                        <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
+
+                        <!-- Hidden Reply Form -->
+                        <form class="reply-form" data-parent-id="{{ comment.id }}" method="POST"
+                              action="{{ url_for('post.add_comment', post_id=task.id) }}" style="display: none;">
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <input type="text" name="comment_content" placeholder="Write a reply..." required>
+                            <button type="submit">Post</button>
+                        </form>
+
+                        <!-- Display Replies -->
+                        <div class="replies">
+                            {% for reply in comment.replies %}
+                                <div class="reply">
+                                    <strong>{{ reply.author.username }}</strong>: {{ reply.content }}
+                                    <div class="comment-date">{{ reply.date_posted.strftime('%d %b %Y %H:%M') }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="no-comments">No comments yet. Be the first!</p>
+                {% endfor %}
+            </div>
+
+            <!-- Add Comment Form -->
+            <form method="POST" action="{{ url_for('post.add_comment', post_id=task.id) }}" class="comment-form">
+                <input type="text" name="comment_content" placeholder="Add a comment..." required>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+
+    </div>
+    {% endfor %}
+{% else %}
+<div class="no-posts-message">
+    <p style="text-align: center; font-size: 18px; color: #777;">
+        You haven't posted any blogs yet! 
+    </p>
+</div>
+{% endif %}
+
+<div class="content2">
+    <p><a href="{{ url_for('post.add_blog') }}">Add a new blog post</a></p>
+</div>
+
+<!-- JavaScript for toggling comments and reply forms -->
+<script>
+    function toggleComments(postId) {
+        const section = document.getElementById(`comments-${postId}`);
+        section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+    }
+
+    document.querySelectorAll(".reply-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const commentId = button.dataset.commentId;
+            const replyForm = document.querySelector(`.reply-form[data-parent-id="${commentId}"]`);
+            replyForm.style.display = (replyForm.style.display === "none" || replyForm.style.display === "") ? "block" : "none";
+        });
+    });
+</script>
+{% endblock %}
